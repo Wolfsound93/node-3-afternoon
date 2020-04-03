@@ -7,7 +7,10 @@ const app = express();
 
 const { SERVER_PORT, CONNECTION_STRING } = process.env;
 
-massive(CONNECTION_STRING)
+massive({
+  connectionString: CONNECTION_STRING,
+  ssl: { rejectUnauthorized: false }
+})
   .then(db => {
     app.set('db', db);
   })

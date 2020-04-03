@@ -1,5 +1,5 @@
 module.exports = {
-  create: (req, res, next) => {
+  create: (req, res) => {
     const db = req.app.get('db');
     const { name, description, price, image_url } = req.body;
     db.create_product([name, description, price, image_url])
@@ -9,7 +9,7 @@ module.exports = {
         console.log(err);
       });
   },
-  getOne: (req, res, next) => {
+  getOne: (req, res) => {
     const db = req.app.get('db');
     const { id } = req.params;
     db.read_product(id)
@@ -19,16 +19,16 @@ module.exports = {
         console.log(err);
       });
   },
-  getAll: (req, res, next) => {
+  getAll: (req, res) => {
     const db = req.app.get('db');
     db.read_products()
-      .then(products => res.status(200).send(products))
+      .then(product => res.status(200).send(product))
       .catch(err => {
         res.status(500).send({ errorMessage: 'Oops! something went wrong...' });
         console.log(err);
       });
   },
-  update: (req, res, next) => {
+  update: (req, res) => {
     const db = req.app.get('db');
     const { params, query } = req;
     db.update_product([params.id, query.desc])
@@ -38,7 +38,7 @@ module.exports = {
         console.log(err);
       });
   },
-  delete: (req, res, next) => {
+  delete: (req, res) => {
     const db = req.app.get('db');
     const { id } = req.params;
     db.delete_product(id)
